@@ -1,0 +1,51 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en" style="height: 100%">
+  <head>
+  	<meta charset="utf-8">
+    <meta name="author" content="Igwesi">
+    <meta name="description" content="The Kuks Blog">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>The Kuks {% block title %}{% endblock %}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <script src="https://widgets.coingecko.com/coingecko-coin-price-marquee-widget.js"></script>
+    {% include "snippets/stylesheet.html" %}
+  </head>
+  <body style="height: 100%">
+    <!-- Navbar -->
+    <section class="mb-5 bg-dark">
+      {% include "snippets/navbar.html" %}
+    </section>
+    <!-- EndNavbar -->
+
+    <!-- Breadcrumb -->
+    <section class="container mt-5">
+      <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+          <div class="container mt-4">
+            <coingecko-coin-price-marquee-widget  coin-ids="bitcoin,ethereum,eos,ripple,litecoin" currency="usd" background-color="#ffffff" locale="en"></coingecko-coin-price-marquee-widget>
+          </div>
+        </ol>
+      </nav>
+      {% include "snippets/header.html" %}
+      <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item"><a href="{% url 'homepage' %}">Home</a></li>
+          {% block breadcrumb %}{% endblock %}
+        </ol>
+      </nav>
+      <!-- EndBreadcrumb -->
+    </section>
+    <!-- Main Content -->
+    <section class="container">
+      {% block content %}{% endblock %}
+    </section>
+    <!-- Main Content -->
+    
+    <section>
+      {% include "snippets/footer.html" %}
+    </section>
+    {% include "snippets/scripts.html" %}
+  </body>
+</html>

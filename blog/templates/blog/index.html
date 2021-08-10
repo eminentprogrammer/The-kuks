@@ -1,0 +1,100 @@
+{% extends 'base.html'%}
+{% load static %}
+
+
+{% block content %}
+<style type="text/css">
+  .navbar-brand, #mainNav .navbar-toggler {
+      font-size: 20px;
+      font-weight: 800;
+      padding: 13px;
+      text-transform: uppercase;
+      background-color: red;
+  }
+    header{
+      margin-top: 0px;
+      height: 300px;
+      background-size: cover;
+      background-repeat: no-repeat;
+    }
+
+    .site-heading{
+      margin-top: 10px;
+      margin-bottom: 10px;
+      padding-top: 60px;
+    }
+    .site-heading h1{
+      color: red;
+      font-size: 100px;
+      text-align: right;
+      text-decoration: underline;
+      text-decoration-color: hsla(5, 100%, 50%, 1.0);
+    }
+    .site-heading p{
+      color: darkturquoise;
+      font-size: 25px;
+      font-weight: 500;
+      text-align: right;
+    }
+  .post-subtitle, .post-meta{
+    font-weight: 100;
+    font-style: italic;
+    font-family: cursive;
+
+  }
+  .card, .meta{
+    border: 0;
+    background: ghostwhite;
+  }
+</style>
+  <!-- Main Content -->
+  <div class="row mt-5">
+    <div class="col-12 col-lg-8 col-md-8 col-sm-10 col-xs mx-auto">
+      <div class="container">
+        {% for post in blog %}
+        <div class="card post-preview mt-3">
+          <a href="{% url 'detail' post.slug %}" class="nav-link">
+            {% if post.image.url != '' %}
+              <img class="card-img-top" src="{{post.image.url}}" width="150px" height="300px" loading="lazy">
+            {% else %}No Image{% endif %}
+            <h2 class="post-title" style="text-transform:uppercase">
+              {{post.title | truncatechars:30}}
+            </h2>
+          </a>
+          <div class="post-subtitle">
+            {{post.body | truncatechars:50}}
+          </div>
+          <hr>
+          <div class="post-meta">
+            posted by
+            <a href="{# url 'view-author-blog' post.author #}">
+              {% if post.author%}{{post.author}}{%else %} The Kuks{% endif %}
+            </a>
+            <strong>on {{post.pub_date}}</strong>
+          </div>
+        </div>
+        <hr>
+        {% endfor %}
+
+        <!-- Pager -->
+        <div class="clearfix">
+          <a class=" btn btn-primary float-right" href="{# url 'next' #}">Older blog &rarr;</a>
+        </div>
+      </div>
+    </div>
+    <div class="col-12 col-lg-4 col-md-4 mx-auto mt-3">
+      <div class="card">
+        <div class="card-header btn btn-outline-warning">Related Blog</div>
+        <div class="card-body meta">
+          <ul class="list-inline">
+            <li><a href="" class="nav-link btn btn-outline-success mb-2">Artificial Intelligence</a></li>
+            <li><a href="" class="nav-link btn btn-outline-danger mb-2">Data Science</a></li>
+            <li><a href="" class="nav-link btn btn-outline-success mb-2">Python Programming</a></li>
+            <li><a href="" class="nav-link btn btn-outline-danger mb-2">Django Framework</a></li>
+            <li><a href="" class="nav-link btn btn-outline-success">Javascript</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock %}

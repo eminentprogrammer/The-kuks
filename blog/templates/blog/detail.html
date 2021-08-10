@@ -1,0 +1,55 @@
+{% extends 'base.html'%}
+
+{% block title %} | {{ blog.title | truncatechars:30 }} {% endblock %}
+
+{% block breadcrumb %}
+<li class="breadcrumb-item" aria-current="page">blog</li>
+<li class="breadcrumb-item" aria-current="page">{{blog.tag.id}} {{ blog.tag }}</li>
+<li class="breadcrumb-item active" aria-current="page">{{ blog.title | truncatechars:30 }} </li>
+{% endblock %}
+
+
+{% block content %}
+<hr class="border p-2 border-success bg-success">
+<header class="masthead">
+    <div class="overlay"></div>
+      <div class="container">
+          <div class="row">
+            <div class="col-lg-8 col-md-10 mx-auto">
+              <div class="site-heading" id="site-heading">
+                <h1> The Kuks </h1>
+                <span class="subheading">{{ blog.title }}</span>
+              </div>
+            </div>
+          </div>
+      </div>
+    </div>
+</header>
+
+<hr class="border p-2 border-success bg-success">
+<div class="container">
+  <div class="jumbotron display-5">
+    <div class="col-12 col-md-10 mx-auto">{% if blog.image.url != '' %}
+      <img  class="card-img-top" width="300px" height="250px" src="{{blog.image.url}}" alt="card image cap">
+      {% else %}{% endif %}
+      <div class="post-preview">
+        <a href="{% url 'detail' blog.slug %}">
+          <h2 class="post-title list-inline">
+            {{blog.title}}
+          </h2>
+        </a><br>
+        <h5 class="post-subtitle">
+          {{blog.highlight}}
+          <a href="{% url 'edit-blog' blog.slug %}">Edit Post</a>
+        </h5><hr>
+        {% if blog.youtube_src %}
+        <iframe width="750" height="315" src="{{ blog.youtube_src }}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        {% endif %}
+        <section class="blog-body"> 
+          <text>{{ blog.body | linebreaks }}</text>
+        </section>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

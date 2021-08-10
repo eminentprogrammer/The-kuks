@@ -1,0 +1,75 @@
+{% extends 'base.html' %}
+
+{% block title %} | Create {% endblock %}
+
+
+{% block breadcrumb %} 
+<li class="breadcrumb-item active" aria-current="page">Edit Blog | <a href="{% url 'detail' form.initial.slug %}">{{ form.initial.title }}</a></li>
+{% endblock %}
+
+{% block content %}
+<form class="form" method="POST" enctype="multipart">{% csrf_token %}{% if success_message %}
+	<h3 style="color:green; text-align: center;">{{success_message}}</h3>{% endif %}
+	{% for field in form %}
+		<p>
+			{% for error in field.errors %}
+				<p style="color: red">{{ error }}</p>
+			{% endfor %}
+		</p>
+	{% endfor %}
+	{% if form.non_field_errors %}
+		<div style="color: red">
+			<p>{{form.non_field_errors}}</p>
+		</div>
+	{% endif %}
+	
+	<div class="row">
+		<!--Left Column  -->
+		<div class="col-6">
+			<!-- Image -->
+			<div class="form-group image-group" id="id_image_group">
+				<label for="id_image" class="border-0 font-weight-bold">Current Image:<a href="{{form.initial.image.url}}"> {{form.initial.image.url}}</a></label>
+				<img src="{{form.initial.image.url}}" loading="lazy" class="img-fluid" height="450px" id="id_image_display">
+				<div class="middle">
+					<div class="text">Change image</div>
+				</div>
+			</div>
+			<input type="file" name="image" id="id_image_file" accept="image/*" onchange="readURL(this)">
+		</div>
+		<!-- Right Column -->
+		<div class="col-6">
+			<!-- Title  -->
+			<div class="form-group">
+				<label for="id_title" class="h4 font-weight-bold">Title:</label>
+				<input class="form-control" type="text" name="title" maxlength="250" required="" id="id_title" value="{{form.initial.title}}">
+			</div>
+			
+			<!-- Body -->
+			<div class="form-group">
+				<label for="id_body" class="h4 font-weight-bold">Body:</label>
+				<textarea class="form-control" name="body" cols="40" rows="10" required="" id="id_body">{{form.initial.body}}</textarea>
+			</div>
+
+			<!-- Tag -->
+			<div class="form-group">
+				<label for="id_tag" class="h4 font-weight-bold">Tag:</label>
+				<select class="form-control" name="tag" id="id_tag">
+				{% if tag %}
+				{% for i in tag %}
+				  <option value="{{ i.id }}" {% if blog.tag == i.name %}selected=""{% endif %}>{{ i.name }}</option>
+				{% endfor %}
+				{% endif %}
+				</select>
+			</div>
+			<!-- Slug -->
+			<div class="form-group">
+				<label for="id_slug" class="h5 font-weight-bold">slug:</label>
+				<input class="form-control" type="text" name="slug" maxlength="200" required="" id="id_slug" value="{{form.initial.slug}}">
+			</div>
+
+			<!-- Submit Button -->
+			<input class="btn btn-outline-success font-weight-bold" type="submit" name="Update"/>
+		</div>
+	</div>
+</form>
+{% endblock %}
