@@ -30,7 +30,7 @@
 <div class="container">
   <div class="jumbotron display-5">
     <div class="col-12 col-md-10 mx-auto">{% if blog.image.url != '' %}
-      <img  class="card-img-top" width="300px" height="250px" src="{{blog.image.url}}" alt="card image cap">
+      <img  class="card-img-top" width="300px" height="450px" src="{{blog.image.url}}" alt="card image cap">
       {% else %}{% endif %}
       <div class="post-preview">
         <a href="{% url 'detail' blog.slug %}">
@@ -43,7 +43,7 @@
           <a href="{% url 'edit-blog' blog.slug %}">Edit Post</a>
         </h5><hr>
         {% if blog.youtube_src %}
-        <iframe width="750" height="315" src="{{ blog.youtube_src }}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        <iframe width="750" height="315" src="https://www.youtube.com/embed/{{ blog.youtube_src }}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
         {% endif %}
         <section class="blog-body"> 
           <text>{{ blog.body | linebreaks }}</text>

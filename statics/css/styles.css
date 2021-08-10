@@ -55,9 +55,7 @@
   background-position: center center;
   background-repeat: no-repeat;
  }
- .container , .jumbotron{
-  background-color: ghostwhite;
- }
+
  .blog-body{
   text-align: left;
   text-indent: 20px;
