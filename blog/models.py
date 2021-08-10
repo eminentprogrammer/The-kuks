@@ -33,4 +33,4 @@ class Entry(models.Model):
 
 	class Meta:
 		verbose_name_plural = "Blog Entry."
-		ordering = ['-pub_date','id']
+		ordering = ['-pub_date','-id']
