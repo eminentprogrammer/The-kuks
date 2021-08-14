@@ -1,43 +1,45 @@
 {% extends 'base.html'%}
 {% load static %}
 
+{% block  header %}
+  {% include "snippets/header.html" %}
+{% endblock %}
+
 {% block content %}
   <!-- Main Content -->
-  <div class="row mt-5">
-    <div class="col-12 col-lg-8 col-md-8 col-sm-10 col-xs mx-auto">
-      <div class="container">
+  <div class="row mt-5 mx-auto">
+    <div class="col-8">
         {% for post in blog %}
-        <div class="card post-preview mt-3">
-          <a href="{% url 'detail' post.slug %}" class="nav-link">
-            {% if post.image.url != '' %}
-              <img class="card-img-top" src="{{post.image.url}}" width="150px" height="300px" loading="lazy">
-            {% else %}No Image{% endif %}
-            <h2 class="post-title" style="text-transform:uppercase">
-              {{post.title | truncatechars:30}}
+        <div class="card">
+          <div class="card-header">
+            <h2 class="post-title p-2" style="text-transform:uppercase">
+              {{post.title | truncatechars:50}}
             </h2>
-          </a>
-          <div class="post-subtitle">
-            {{post.body | truncatechars:50}}
-          </div>
-          <hr>
-          <div class="post-meta">
-            posted by
-            <a href="{# url 'view-author-blog' post.author #}">
-              {% if post.author%}{{post.author}}{%else %} The Kuks{% endif %}
+            <div class="post-meta mb-2">
+              posted
+              on <span class="font-weight-bold text-info"> {{post.pub_date}}</span>
+            </div>
+            <div class="card-img">
+              <img class="img-fluid" src="{{post.image.url}}" width="120px" height="300px" loading="lazy">
+            </div>  
             </a>
-            <strong>on {{post.pub_date}}</strong>
+          </div>
+          <div class="post-subtitle card-body p-4">
+              {{post.body | truncatechars:250}}
+              <div class="clearfix">
+                <a class=" btn btn-danger float-right" href="{% url 'detail' post.slug %}">Read more &rarr;</a>
+              </div>
           </div>
         </div>
         <hr>
         {% endfor %}
-
         <!-- Pager -->
-        <div class="clearfix">
+        <div class="clearfix mt-2">
           <a class=" btn btn-primary float-right" href="{# url 'next' #}">Older blog &rarr;</a>
         </div>
-      </div>
     </div>
-    <div class="col-12 col-lg-4 col-md-4 mx-auto mt-3">
+
+    <div class="col-4 mx-auto">
       <div class="card">
         <div class="card-header btn btn-outline-warning">Related Blog</div>
         <div class="card-body meta">
@@ -52,4 +54,5 @@
       </div>
     </div>
   </div>
+</div>
 {% endblock %}

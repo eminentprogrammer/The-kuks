@@ -8,17 +8,20 @@
     <meta name="mobile-web-app-capable" content="yes">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>The Kuks {% block title %}{% endblock %}</title>
+    {% include "trademark.txt" %}
+    {% csrf_token %} 
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <script src="https://widgets.coingecko.com/coingecko-coin-price-marquee-widget.js"></script>
     {% include "snippets/stylesheet.html" %}
+    <link rel="icon" href="https://codefires.com/wp-content/uploads/2021/06/cropped-nav-logo-2-192x192.png" sizes="192x192">
+    <link rel="apple-touch-icon" href="https://codefires.com/wp-content/uploads/2021/06/cropped-nav-logo-2-180x180.png">
   </head>
+
   <body style="height: 100%">
     <!-- Navbar -->
-    <section class="mb-5 bg-dark">
-      {% include "snippets/navbar.html" %}
-    </section>
+    <section class="mb-5 bg-dark">{% include "snippets/navbar.html" %}</section>
     <!-- EndNavbar -->
-
+ 
     <!-- Breadcrumb -->
     <section class="container mt-5">
       <nav aria-label="breadcrumb">
@@ -28,7 +31,9 @@
           </div>
         </ol>
       </nav>
-      {% include "snippets/header.html" %}
+      <!-- header -->
+      {% block header %}{% endblock %}
+      <!-- End header -->
       <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
           <li class="breadcrumb-item"><a href="{% url 'homepage' %}">Home</a></li>
@@ -37,6 +42,7 @@
       </nav>
       <!-- EndBreadcrumb -->
     </section>
+ 
     <!-- Main Content -->
     <section class="container">
       {% block content %}{% endblock %}

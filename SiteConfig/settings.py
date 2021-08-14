@@ -11,7 +11,7 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 """
 import os
 from decouple import config
-#import django_heroku, dj_database_url
+import django_heroku, dj_database_url
 
 from pathlib import Path
 
@@ -23,8 +23,8 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-# SECRET_KEY = config('SECRET_KEY')
-SECRET_KEY="django-insecure-404ovmvc+i1)qp_vswfh9v_xycy%-fl35!98i(x%-&i8w$*oxq"
+SECRET_KEY = config('SECRET_KEY')
+
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = config('DEBUG', default=True, cast=bool)
@@ -40,9 +40,13 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.humanize',
 
     'blog',
+    'developer',
 ]
+
+ROOT_URLCONF = 'SiteConfig.urls'
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -55,7 +59,6 @@ MIDDLEWARE = [
    
 ]
 
-ROOT_URLCONF = 'SiteConfig.urls'
 
 TEMPLATES = [
     {
@@ -78,7 +81,6 @@ WSGI_APPLICATION = 'SiteConfig.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
-# if DEBUG:
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
@@ -111,7 +113,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Africa/Lagos'
 
 USE_I18N = True
 
@@ -125,14 +127,17 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 MEDIA_URL = '/media/'
+STATIC_ROOT = os.path.join(BASE_DIR, 'statics_cdn')
+MEDIA_ROOT = os.path.join(BASE_DIR ,'media_cdn')
 
 STATICFILES_DIRS = [
         os.path.join(BASE_DIR, 'statics'),
 ]
 
-STATIC_ROOT = os.path.join(BASE_DIR, 'statics_cdn')
-MEDIA_ROOT = os.path.join(BASE_DIR ,'media_cdn')
-
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+DATABASES['default'] = dj_database_url.config(conn_max_age=600, ssl_require=True)
+
+django_heroku.settings(locals())

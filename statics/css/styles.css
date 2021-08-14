@@ -72,7 +72,7 @@
   font-weight: 200;
  }
  .blog-body>text{
-  font-size: 14px;
+  font-size: 40px;
   font-style: normal;
   list-style: persian;
   text-overflow: ellipsis;
@@ -119,7 +119,7 @@
 }
 
 .image-group:hover .image {
-  	opacity: 0.3;
+  	opacity: 1.3;
 }
 
 .image-group:hover .middle {

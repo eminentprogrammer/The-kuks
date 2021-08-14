@@ -8,12 +8,14 @@ from django.core.mail import EmailMultiAlternatives
 from django.contrib.auth.tokens import default_token_generator
 
 
+template = "registration/email/new_account.html"
+
 
 class SendMail(user):
     c = {
         "user": user,
         "email": user.email,
-        'domain': 'anony.pythonanywhere.com',
+        'domain': 'the-kuks.herokuapp.com'# site url,
         'site_name':'The Kuks',
         "uid": urlsafe_base64_encode(force_bytes(user.pk)),
         'token': default_token_generator.make_token(user),

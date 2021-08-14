@@ -2,6 +2,8 @@ from . models import *
 from . forms import BlogEntry, UpdateBlogForm 
 from django.shortcuts import render, redirect, get_object_or_404
 from .utils import paginateblog
+import json
+from developer.models import programmer, langauage, tool
 
 def homepage(request):
 	blog = []
@@ -21,30 +23,39 @@ def create(request):
 		redirect('create-blog')
 	return render(request, 'blog/create-blog.html', context={'CreateBlogForm':form, 'tag':value})
 
-def detail(request, slug=None):
+def detail(request, slug):
 	blog = get_object_or_404(Entry, slug=slug)
 	return render(request, 'blog/detail.html', context={'blog':blog})
 
-
-def edit(request, slug=None):
+def edit(request, slug):
 	context = {}
-	blog_post = get_object_or_404(Entry, slug=slug)
+	blog = Entry.objects.get(slug=slug)
 	value = tag.objects.all()
-	if request.method == "POST":
-		form = UpdateBlogForm(request.POST or None, request.FILES or None, instance=blog_post)
+	
+	if request.POST:
+		form = UpdateBlogForm(request.POST or None, request.FILES or None, instance=blog)
 		if form.is_valid():
 			obj = form.save(commit=False)
+			print(obj.image.url)
+			blog = obj
 			obj.save()
-			context['success_message'] = "Updated"
-			blog_post = obj
+			return redirect('detail', slug=blog.slug)
+
 	form = UpdateBlogForm(
 		initial = {
-				"title": blog_post.title,
-				"body": blog_post.body,
-				"tag": blog_post.tag,
-				"slug": blog_post.slug,
+				"title"	: blog.title,
+				"body"	: blog.body,
+				"tag"	: blog.tag,
+				"slug"	: blog.slug,
+				"image"	: blog.image,
 		}
-		)
-	if blog_post.image:
-		form.initial["image"]: blog_post.image
+
+	)
+
 	return render(request, 'blog/edit.html', context={'form':form, 'tag':value})
+
+def about(request):
+	user = get_object_or_404(programmer, username="Igwesi")
+	lang = langauage.objects.all()
+	tools = tool.objects.all() 
+	return render(request, 'about.html', context={'user':user, 'lang':lang,'tools':tools})

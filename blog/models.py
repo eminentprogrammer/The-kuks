@@ -2,6 +2,9 @@ from django.db import models
 from django.urls import reverse
 from django.utils.text import slugify
 
+def upload_location(instance, filename):
+	path = 'blog/{}/{}'.format(str(instance.tag), str(filename))
+	return path
 
 class tag(models.Model):
 	name = models.CharField(max_length=200)
@@ -15,19 +18,22 @@ class tag(models.Model):
 
 
 class Entry(models.Model):
-	image 		= models.ImageField(upload_to="image/", blank=True, null=True, default="image/default.png")
+	image 		= models.ImageField(upload_to=upload_location, blank=True, null=True, default="image/default.png")
 	title 		= models.CharField(max_length=250, help_text="Blog title", unique=True)
 	body		= models.TextField()
-	youtube_src = models.URLField(default='', blank=True)
+	youtube_src = models.CharField(max_length=200, default='', blank=True)
 	tag 		= models.ForeignKey(tag, on_delete=models.CASCADE, related_name="tags", null=True, default=1)
 	pub_date 	= models.DateField(auto_now_add=True)
 	slug 		= models.SlugField(blank=True, default='')
 
 	def __str__(self):
 		return self.title
+
 	def save(self, *args, **kwargs):
-		self.slug = slugify(self.title)
+		if not self.slug:
+			self.slug = slugify(self.title)
 		super(Entry, self).save()
+
 	def get_absolute_url(self):
 		return reverse('detail', args=[str(self.slug)])
 
