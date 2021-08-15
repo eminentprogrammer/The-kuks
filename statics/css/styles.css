@@ -72,11 +72,9 @@
   font-weight: 200;
  }
  .blog-body>text{
-  font-size: 40px;
+  font-size: 18px;
   font-style: normal;
-  list-style: persian;
-  text-overflow: ellipsis;
-  padding: 1px 2px 3px;
+  padding: 1px 2px 2px 1px;
  }
  /* EndBlog Detail */
 
