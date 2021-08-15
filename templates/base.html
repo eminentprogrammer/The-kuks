@@ -10,11 +10,11 @@
     <title>The Kuks {% block title %}{% endblock %}</title>
     {% include "trademark.txt" %}
     {% csrf_token %} 
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="viewport" content="width=device-width, initial-scale=2, shrink-to-fit=no">
     <script src="https://widgets.coingecko.com/coingecko-coin-price-marquee-widget.js"></script>
     {% include "snippets/stylesheet.html" %}
-    <link rel="icon" href="https://codefires.com/wp-content/uploads/2021/06/cropped-nav-logo-2-192x192.png" sizes="192x192">
-    <link rel="apple-touch-icon" href="https://codefires.com/wp-content/uploads/2021/06/cropped-nav-logo-2-180x180.png">
+    <link rel="icon" href="{% static 'wood-bg.jpg' %}" sizes="192x192">
+    <link rel="apple-touch-icon" href="{% static 'wood-bg.jpg' %}">
   </head>
 
   <body style="height: 100%">
