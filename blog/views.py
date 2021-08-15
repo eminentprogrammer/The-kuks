@@ -35,7 +35,7 @@ def edit(request, slug):
 	if request.POST:
 		form = UpdateBlogForm(request.POST or None, request.FILES or None, instance=blog)
 		if form.is_valid():
-			instance = form.save(commit=false)
+			instance = form.save(commit=False)
 			instance.image = form.image
 			instance.save()
 			return redirect('detail', slug=instance.slug)
