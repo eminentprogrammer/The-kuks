@@ -35,7 +35,7 @@ class SendMail(user):
             return HttpResponse('Invalid header found.')
 
     def Reset(user):
-        subject = "Bevardis Password Reset Requested"
+        subject = "Password Reset Requested"
         plaintext = template.loader.get_template("registration/email/password_reset_subject.txt")
         htmltemp = template.loader.get_template("registration/email/password_reset_email.html")
         text_content = plaintext.render(c)
